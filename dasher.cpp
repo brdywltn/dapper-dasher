@@ -9,6 +9,9 @@ int main() {
     // Initialise the window
     InitWindow(windowWidth, windowHeight, windowTitle);
 
+    // Acceleration due to gravity (pixels/frame)/frame
+    const int gravity {1};
+
     // Rectangle dimensions
     const int width {50};
     const int height {80};
@@ -21,11 +24,25 @@ int main() {
         // Start drawing
         BeginDrawing();
 
+        // Apply gravity
+        if (posY >= windowHeight - height) 
+        {
+            // Rectangle is on the ground
+            velocity = 0;
+        }
+        else
+        {
+            // Rectangle is in the air
+            // Apply gravity
+            velocity += gravity;
+        }
+
         if (IsKeyPressed(KEY_SPACE))
         {
             velocity -= 10;
         }
 
+        // Update position
         posY += velocity;
 
         DrawRectangle(windowWidth / 2, posY, width, height, BLUE);
