@@ -7,8 +7,8 @@ int main() {
 
     InitWindow(windowWidth, windowHeight, "Dapper Dasher");
 
-    SetTargetFPS(60);
 
+    SetTargetFPS(60);
     while(!WindowShouldClose())
     {
         BeginDrawing();
