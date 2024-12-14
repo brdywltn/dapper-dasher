@@ -22,7 +22,14 @@ int main() {
 
     Vector2 scarfyPos;
     scarfyPos.x = windowWidth / 2 - scarfyRec.width / 2;
-    scarfyPos.y = windowHeight - scarfyRec.height; 
+    scarfyPos.y = windowHeight - scarfyRec.height;
+
+    // Track current animation frame
+    int frame {};
+
+    // Amount of time before we update the animation frame
+    const float updateTime {1.0 / 12.0};
+    float runningTime {};
 
     int velocity {0};
 
@@ -34,11 +41,12 @@ int main() {
     SetTargetFPS(60);
     while(!WindowShouldClose())
     {
+        // Delta time (time since last frame)
+        const float deltaTime {GetFrameTime()};
+
         // Start drawing
         BeginDrawing();
-
-        const float deltaTime = GetFrameTime();
-
+    
         // Apply gravity
         if (scarfyPos.y >= windowHeight - scarfyRec.height) 
         {
@@ -64,6 +72,25 @@ int main() {
 
         // Update position
         scarfyPos.y += velocity * deltaTime;
+
+        // Update running time
+        runningTime += deltaTime;
+
+        if (runningTime >= updateTime)
+        {
+            runningTime = 0.0;
+
+            // Update animation frame
+            scarfyRec.x = (frame * scarfyRec.width);
+            frame++;
+            if (frame > 5)
+            {
+                frame = 0;
+            }
+        }
+
+        
+        
 
         DrawTextureRec(scarfy, scarfyRec, scarfyPos, WHITE);
 
