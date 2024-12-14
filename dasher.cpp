@@ -13,14 +13,17 @@ int main() {
     const int gravity {1};
 
     Texture2D scarfy = LoadTexture("textures/scarfy.png");
+
     Rectangle scarfyRec;
+    scarfyRec.width = scarfy.width / 6;
+    scarfyRec.height = scarfy.height;
+    scarfyRec.x = 0;
+    scarfyRec.y = 0;
+
     Vector2 scarfyPos;
+    scarfyPos.x = windowWidth / 2 - scarfyRec.width / 2;
+    scarfyPos.y = windowHeight - scarfyRec.height; 
 
-    // Rectangle dimensions
-    const int width {50};
-    const int height {80};
-
-    int posY {windowHeight - height};
     int velocity {0};
 
     // Is the rectangle in the air?
@@ -35,7 +38,7 @@ int main() {
         BeginDrawing();
 
         // Apply gravity
-        if (posY >= windowHeight - height) 
+        if (scarfyPos.y >= windowHeight - scarfyRec.height) 
         {
             // Rectangle is on the ground
             velocity = 0;
@@ -58,9 +61,9 @@ int main() {
         
 
         // Update position
-        posY += velocity;
+        scarfyPos.y += velocity;
 
-        DrawRectangle(windowWidth / 2, posY, width, height, BLUE);
+        DrawTextureRec(scarfy, scarfyRec, scarfyPos, WHITE);
 
         
 
@@ -70,5 +73,6 @@ int main() {
         EndDrawing();
     }
 
+    UnloadTexture(scarfy);
     CloseWindow();
 }
