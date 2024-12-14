@@ -15,9 +15,15 @@ int main() {
     // Rectangle dimensions
     const int width {50};
     const int height {80};
+
     int posY {windowHeight - height};
     int velocity {0};
+
+    // Is the rectangle in the air?
     bool isInAir {false};
+    // Jump velocity
+    const int jumpVelocity {-22};
+    
    
 
     SetTargetFPS(60);
@@ -41,10 +47,10 @@ int main() {
             isInAir = true;
         }
 
-        
+        // Jump check
         if (IsKeyPressed(KEY_SPACE) && !isInAir)
         {
-            velocity -= 10;
+            velocity += jumpVelocity;
         }
         
         
