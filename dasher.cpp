@@ -17,6 +17,8 @@ int main() {
     const int height {80};
     int posY {windowHeight - height};
     int velocity {0};
+    bool isInAir {false};
+   
 
     SetTargetFPS(60);
     while(!WindowShouldClose())
@@ -29,18 +31,23 @@ int main() {
         {
             // Rectangle is on the ground
             velocity = 0;
+            isInAir = false;
         }
         else
         {
             // Rectangle is in the air
             // Apply gravity
             velocity += gravity;
+            isInAir = true;
         }
 
-        if (IsKeyPressed(KEY_SPACE))
+        
+        if (IsKeyPressed(KEY_SPACE) && !isInAir)
         {
             velocity -= 10;
         }
+        
+        
 
         // Update position
         posY += velocity;
