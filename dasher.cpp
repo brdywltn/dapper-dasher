@@ -81,7 +81,7 @@ int main() {
         // Update running time
         runningTime += deltaTime;
 
-        if (runningTime >= updateTime)
+        if (runningTime >= updateTime && !isInAir)
         {
             runningTime = 0.0;
 
