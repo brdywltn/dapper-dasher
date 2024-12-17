@@ -22,6 +22,10 @@ int main() {
     Rectangle nebulaRec { 0.0, 0.0, nebula.width / 8, nebula.height / 8 };
     Vector2 nebulaPos { windowWidth, windowHeight - nebulaRec.height };
     int nebulaVelocity { -200 }; // (pixels/second)
+
+    Rectangle nebula2Rec { 0.0, 0.0, nebula.width / 8, nebula.height / 8 };
+    Vector2 nebula2Pos { windowWidth + 300, windowHeight - nebulaRec.height };
+
     
     // Track current animation frame
     int frame {};
@@ -32,9 +36,15 @@ int main() {
 
     // Track animation frame for the nebula
     int nebFrame {};
-    // Amount of time before we update the animation frame for the nebula
-    const float nebUpdateTime { 1.0 / 12.0 };
+    // Amount of time before we update the animation frame for the 2nd nebula
+    const float nebUpdateTime { 1.0 / 16.0 };
     float nebRunningTime {};
+
+    // Track animation frame for the 2nd nebula
+    int neb2Frame {};
+    // Amount of time before we update the animation frame for the nebula
+    const float neb2UpdateTime { 1.0 / 12.0 };
+    float neb2RunningTime {};
 
     int velocity { 0 };
 
@@ -76,9 +86,19 @@ int main() {
         // Update Nebula position
         nebulaPos.x += nebulaVelocity * deltaTime;
 
+        // loop the first nebula
         if (nebulaPos.x + (nebula.width / 8) < 0) 
         {
             nebulaPos.x = windowWidth;
+        };
+
+        // Update 2nd Nebula position
+        nebula2Pos.x += nebulaVelocity * deltaTime;
+
+        // Loop the 2nd nebula
+        if (nebula2Pos.x + (nebula.width / 8) < 0) 
+        {
+            nebula2Pos.x = windowWidth;
         };
 
         // Update Scarfy position
@@ -116,9 +136,26 @@ int main() {
             }
         }
 
+        // Update Neb running time
+        neb2RunningTime += deltaTime;
+
+        // Update Nebula animation frames
+        if (neb2RunningTime >= neb2UpdateTime)
+        {
+            neb2RunningTime = 0.0;
+
+            nebula2Rec.x = (neb2Frame * nebulaRec.width);
+            neb2Frame++;
+            if (neb2Frame > 7)
+            {
+                neb2Frame = 0;
+            }
+        }
+
         // Draw Nebula
         DrawTextureRec(nebula, nebulaRec, nebulaPos, WHITE);
-
+        // Draw 2nd Nebula
+        DrawTextureRec(nebula, nebula2Rec, nebula2Pos, RED);
         // Draw Scarfy
         DrawTextureRec(scarfy, scarfyRec, scarfyPos, WHITE);
 
