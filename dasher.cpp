@@ -3,14 +3,14 @@
 int main() {
 
     // Window dimensions
-    const int windowHeight {450};
-    const int windowWidth {800};
+    const int windowHeight { 450 };
+    const int windowWidth { 800 };
     const char windowTitle[] {"Dapper Dasher"};
     // Initialise the window
     InitWindow(windowWidth, windowHeight, windowTitle);
 
     // Acceleration due to gravity (pixels/s)/s
-    const int gravity {1'000};
+    const int gravity { 1'000 };
 
     // Scarfy variables
     Texture2D scarfy = LoadTexture("textures/scarfy.png");
@@ -27,15 +27,21 @@ int main() {
     int frame {};
 
     // Amount of time before we update the animation frame
-    const float updateTime {1.0 / 12.0};
+    const float updateTime { 1.0 / 12.0 };
     float runningTime {};
 
-    int velocity {0};
+    // Track animation frame for the nebula
+    int nebFrame {};
+    // Amount of time before we update the animation frame for the nebula
+    const float nebUpdateTime { 1.0 / 12.0 };
+    float nebRunningTime {};
+
+    int velocity { 0 };
 
     // Is the rectangle in the air?
-    bool isInAir {false};
+    bool isInAir { false };
     // Jump velocity (pixels/s)
-    const int jumpVelocity {-600};
+    const int jumpVelocity { -600 };
 
     SetTargetFPS(60);
     while(!WindowShouldClose())
@@ -80,7 +86,7 @@ int main() {
 
         // Update running time
         runningTime += deltaTime;
-
+        // Update Scarfy animation frame
         if (runningTime >= updateTime && !isInAir)
         {
             runningTime = 0.0;
@@ -91,6 +97,22 @@ int main() {
             if (frame > 5)
             {
                 frame = 0;
+            }
+        }
+
+        // Update Neb running time
+        nebRunningTime += deltaTime;
+
+        // Update Nebula animation frames
+        if (nebRunningTime >= nebUpdateTime)
+        {
+            nebRunningTime = 0.0;
+
+            nebulaRec.x = (nebFrame * nebulaRec.width);
+            nebFrame++;
+            if (nebFrame > 5)
+            {
+                nebFrame = 0;
             }
         }
 
