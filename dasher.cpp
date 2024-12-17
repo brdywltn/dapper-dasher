@@ -21,7 +21,7 @@ int main() {
     Texture2D nebula = LoadTexture("textures/12_nebula_spritesheet.png");
     Rectangle nebulaRec { 0.0, 0.0, nebula.width / 8, nebula.height / 8 };
     Vector2 nebulaPos { windowWidth, windowHeight - nebulaRec.height };
-    int nebulaVelocity { -600 }; // (pixels/second)
+    int nebulaVelocity { -200 }; // (pixels/second)
     
     // Track current animation frame
     int frame {};
@@ -110,7 +110,7 @@ int main() {
 
             nebulaRec.x = (nebFrame * nebulaRec.width);
             nebFrame++;
-            if (nebFrame > 5)
+            if (nebFrame > 7)
             {
                 nebFrame = 0;
             }
