@@ -1,5 +1,14 @@
 #include "raylib.h"
 
+struct AnimationData
+{
+    Rectangle rec;
+    Vector2 pos;
+    int frame;
+    float updateTime;
+    float runningTime;
+};
+
 int main() {
 
     // Window dimensions
@@ -14,8 +23,20 @@ int main() {
 
     // Scarfy variables
     Texture2D scarfy = LoadTexture("textures/scarfy.png");
+    AnimationData scarfyData;
+    scarfyData.rec.width = scarfy.width / 6;
+    scarfyData.rec.height = scarfy.height;
+    scarfyData.rec.x = 0.0;
+    scarfyData.rec.y = 0.0;
+    scarfyData.pos.x = windowWidth / 2 - scarfyData.rec.width / 2;
+    scarfyData.pos.y = windowHeight - scarfyData.rec.height;
+    scarfyData.frame = 0;
+    scarfyData.updateTime = 1.0 / 12.0;
+    scarfyData.runningTime = 0;
+
     Rectangle scarfyRec { 0.0, 0.0, scarfy.width / 6, scarfy.height };
     Vector2 scarfyPos { windowWidth / 2 - scarfyRec.width / 2, windowHeight - scarfyRec.height };
+
   
     // Nebula variables
     Texture2D nebula = LoadTexture("textures/12_nebula_spritesheet.png");
@@ -144,7 +165,7 @@ int main() {
         {
             neb2RunningTime = 0.0;
 
-            nebula2Rec.x = (neb2Frame * nebulaRec.width);
+            nebula2Rec.x = (neb2Frame * nebula2Rec.width);
             neb2Frame++;
             if (neb2Frame > 7)
             {
