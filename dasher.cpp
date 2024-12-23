@@ -12,11 +12,10 @@ struct AnimationData
 int main() {
 
     // Window dimensions
-    const int windowHeight { 450 };
-    const int windowWidth { 800 };
+    const int windowDimensions[] = { 450, 800 };
     const char windowTitle[] {"Dapper Dasher"};
     // Initialise the window
-    InitWindow(windowWidth, windowHeight, windowTitle);
+    InitWindow(windowDimensions[1], windowDimensions[0], windowTitle);
 
     // Acceleration due to gravity (pixels/s)/s
     const int gravity { 1'000 };
@@ -26,7 +25,7 @@ int main() {
     AnimationData scarfyData
     {
         { 0.0, 0.0, scarfy.width / 6, scarfy.height },
-        { windowWidth / 2 - (scarfy.width / 6) / 2, windowHeight - scarfy.height },
+        { windowDimensions[1] / 2 - (scarfy.width / 6) / 2, windowDimensions[0] - scarfy.height },
         0,
         1.0 / 12.0,
         0
@@ -37,7 +36,7 @@ int main() {
     AnimationData nebulaData 
     {
         { 0.0, 0.0, nebula.width / 8, nebula.height / 8 },      // Neb Rectangle rec
-        { windowWidth, windowHeight - nebula.height / 8 },      // Neb Vec2 Pos
+        { windowDimensions[1], windowDimensions[0] - nebula.height / 8 },      // Neb Vec2 Pos
         0,                                                      // Neb int Frame
         1.0 / 12.0,                                             // Neb float update time
         0                                                       // Neb float running time
@@ -47,7 +46,7 @@ int main() {
     AnimationData nebula2Data
     {
         { 0.0, 0.0, nebula.width / 8, nebula.height / 8 },       // Neb Rectangle rec
-        { windowWidth + 300, windowHeight - nebula.height / 8 }, // Neb Vec2 Pos
+        { windowDimensions[1] + 300, windowDimensions[0] - nebula.height / 8 }, // Neb Vec2 Pos
         0,                                                       // Neb int Frame
         1.0 / 16.0,                                              // Neb float update time
         0                                                        // Neb float running time
@@ -72,7 +71,7 @@ int main() {
         BeginDrawing();
     
         // Apply gravity
-        if (scarfyData.pos.y >= windowHeight - scarfyData.rec.height) 
+        if (scarfyData.pos.y >= windowDimensions[0] - scarfyData.rec.height) 
         {
             // Rectangle is on the ground
             velocity = 0;
@@ -98,7 +97,7 @@ int main() {
         // loop the first nebula
         if (nebulaData.pos.x + (nebula.width / 8) < 0) 
         {
-            nebulaData.pos.x = windowWidth;
+            nebulaData.pos.x = windowDimensions[1];
         };
 
         // Update 2nd Nebula position
@@ -107,7 +106,7 @@ int main() {
         // Loop the 2nd nebula
         if (nebula2Data.pos.x + (nebula.width / 8) < 0) 
         {
-            nebula2Data.pos.x = windowWidth;
+            nebula2Data.pos.x = windowDimensions[1];
         };
 
         // Update Scarfy position
