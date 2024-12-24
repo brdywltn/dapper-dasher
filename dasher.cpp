@@ -53,7 +53,7 @@ int main() {
         { 0.0, 0.0, scarfy.width / 6, scarfy.height },
         { windowDimensions[1] / 2 - (scarfy.width / 6) / 2, windowDimensions[0] - scarfy.height },
         0,
-        1.0 / 12.0,
+        1.0 / 7.0,
         0
     };
  
@@ -78,6 +78,9 @@ int main() {
     int nebulaVelocity { -200 }; // (pixels/second)
     int velocity { 0 };
 
+    Texture2D background = LoadTexture("textures/far-buildings.png");
+    float background_x { 0.0 };
+
     // Is the rectangle in the air?
     bool isInAir { false };
     // Jump velocity (pixels/s)
@@ -91,6 +94,13 @@ int main() {
 
         // Start drawing
         BeginDrawing();
+        ClearBackground(WHITE);
+
+        background_x -= 20 * deltaTime;
+
+        // Draw background
+        Vector2 bgPos { background_x, 0.0 };
+        DrawTextureEx(background, bgPos, 0.0, 2.5, WHITE);
     
         // Apply gravity
         if (isOnGround(scarfyData, windowDimensions[0])) 
@@ -148,15 +158,12 @@ int main() {
         // Draw Scarfy
         DrawTextureRec(scarfy, scarfyData.rec, scarfyData.pos, WHITE);
 
-        
-
-        ClearBackground(WHITE);
-
         // End drawing
         EndDrawing();
     }
 
     UnloadTexture(scarfy);
     UnloadTexture(nebula);
+    UnloadTexture(background);
     CloseWindow();
 }
