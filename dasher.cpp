@@ -80,6 +80,10 @@ int main() {
 
     Texture2D background = LoadTexture("textures/far-buildings.png");
     float background_x { 0.0 };
+    Texture2D midground = LoadTexture("textures/back-buildings.png");
+    float midground_x { 0.0 };
+    Texture2D foreground = LoadTexture("textures/foreground.png");
+    float foreground_x { 0.0 };
 
     // Is the rectangle in the air?
     bool isInAir { false };
@@ -90,18 +94,51 @@ int main() {
     while(!WindowShouldClose())
     {
         // Delta time (time since last frame)
-        const float deltaTime {GetFrameTime()};
+        const float deltaTime { GetFrameTime() };
 
         // Start drawing
         BeginDrawing();
         ClearBackground(WHITE);
 
+        // Scroll background
         background_x -= 20 * deltaTime;
+        if (background_x <= -background.width * 3.3)
+        {
+            background_x = 0.0;
+        }
+
+        // Scroll midground
+        midground_x -= 40 * deltaTime;
+        if (midground_x <= -midground.width * 3.3)
+        {
+            midground_x = 0.0;
+        }
+
+        // Scroll foreground
+        foreground_x -= 80 * deltaTime;
+        if (foreground_x <= -foreground.width * 3.3)
+        {
+            foreground_x = 0.0;
+        }
 
         // Draw background
-        Vector2 bgPos { background_x, 0.0 };
-        DrawTextureEx(background, bgPos, 0.0, 2.5, WHITE);
-    
+        Vector2 bg1Pos { background_x, 0.0 };
+        DrawTextureEx(background, bg1Pos, 0.0, 3.3, WHITE);
+        Vector2 bg2Pos { background_x + background.width * 3.3, 0.0};
+        DrawTextureEx(background, bg2Pos, 0.0, 3.3, WHITE);
+
+        // Draw midground
+        Vector2 mg1Pos { midground_x, 0.0};
+        DrawTextureEx(midground, mg1Pos, 0.0, 3.3, WHITE);
+        Vector2 mg2Pos { midground_x + midground.width * 3.3, 0.0 };
+        DrawTextureEx(midground, mg2Pos, 0.0, 3.3, WHITE);
+
+        // Draw foreground
+        Vector2 fg1Pos { foreground_x, 0.0 };
+        DrawTextureEx(foreground, fg1Pos, 0.0, 3.3, WHITE);
+        Vector2 fg2Pos { foreground_x + foreground.width * 3.3, 0.0 };
+        DrawTextureEx(foreground, fg2Pos, 0.0, 3.3, WHITE);
+
         // Apply gravity
         if (isOnGround(scarfyData, windowDimensions[0])) 
         {
@@ -165,5 +202,7 @@ int main() {
     UnloadTexture(scarfy);
     UnloadTexture(nebula);
     UnloadTexture(background);
+    UnloadTexture(midground);
+    UnloadTexture(foreground);
     CloseWindow();
 }
