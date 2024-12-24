@@ -74,7 +74,9 @@ int main() {
         nebulae[i].updateTime = 1.0 / 16.0;
         nebulae[i].runningTime = 0.0;
     }
-   
+    
+    float finishLine { nebulae[sizeOfNebulae - 1].pos.x };
+
     int nebulaVelocity { -200 }; // (pixels/second)
     int velocity { 0 };
 
@@ -166,6 +168,9 @@ int main() {
         {
             nebulae[i].pos.x += nebulaVelocity * deltaTime;
         }
+
+        // Update finish line position
+        finishLine += nebulaVelocity * deltaTime;
 
         // Update Scarfy position
         scarfyData.pos.y += velocity * deltaTime;
