@@ -92,6 +92,8 @@ int main() {
     // Jump velocity (pixels/s)
     const int jumpVelocity { -600 };
 
+    bool collision {};
+
     SetTargetFPS(60);
     while(!WindowShouldClose())
     {
@@ -191,14 +193,47 @@ int main() {
            nebulae[i] = updateAnimationData(nebulae[i], deltaTime, 7);
         }
 
-        // Draw nebulae
-        for (int i = 0; i < sizeOfNebulae; i++)
+        
+        for (AnimationData nebula: nebulae)
         {
-            DrawTextureRec(nebula, nebulae[i].rec, nebulae[i].pos, WHITE);
+            float pad { 50 };
+
+            Rectangle nebRec {
+                nebula.pos.x + pad,
+                nebula.pos.y + pad,
+                nebula.rec.width - 2 * pad,
+                nebula.rec.height - 2 * pad
+            };
+
+            Rectangle scarfyRec {
+                scarfyData.pos.x,
+                scarfyData.pos.y,
+                scarfyData.rec.width,
+                scarfyData.rec.height
+            };
+
+            if (CheckCollisionRecs(nebRec, scarfyRec))
+            {
+                collision = true;
+            }
         }
 
-        // Draw Scarfy
-        DrawTextureRec(scarfy, scarfyData.rec, scarfyData.pos, WHITE);
+        // Check for collision before drawing textures
+        if (collision) 
+        {
+            // lose the game
+        }
+        else 
+        {
+            // Draw nebulae
+            for (int i = 0; i < sizeOfNebulae; i++)
+            {
+                DrawTextureRec(nebula, nebulae[i].rec, nebulae[i].pos, WHITE);
+            }
+
+            // Draw Scarfy
+            DrawTextureRec(scarfy, scarfyData.rec, scarfyData.pos, WHITE);
+        }
 
         // End drawing
         EndDrawing();
